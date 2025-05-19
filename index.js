@@ -1,26 +1,3 @@
-// For nodejs only
-/*const path = require('path')
-
-const app = express();
-
-app.set('INST377', path.join(__dirname, 'INST377'))
-app.set('view engine', 'ejs');
-
-app.get("/", (req, res) => {
-    res.render("final_home");
-});
-
-import fs from "fs";
-await fetch("https://api.trace.moe/search", {
-method: "POST",
-body: fs.readFileSync("demo.jpg"),
-headers: { "Content-type": "image/jpeg" },
-}).then((e) => e.json());
-*/
-//import express from 'express'
-//import cors from 'cors'
-//import multer from 'multer'
-
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
@@ -64,11 +41,18 @@ const upload = multer({
 	// imageToUpload is the name of file attribute
 }).single("imageToUpload");
 
-var server = http.createServer(function (req, res) {
+// var server = http.createServer(function (req, res) {
+express.get('/', (req, res) => {
   console.log('request was made: ' + req.url);
   res.writeHead(200, {'Content-Type': 'text/html'});
   var myReadStream = fs.createReadStream(__dirname + '/final_home.html', 'utf8');
   myReadStream.pipe(res);
+  if(req.url == '/redirectabout') {
+    res.redirect('/final_about.html')
+  }
+  if(req.url == '/redirectfunction') {
+    res.redirect('/final_function.html')
+  }
   if (req.url == '/fileupload') {
     try {
       upload(req, res, function (err) {
