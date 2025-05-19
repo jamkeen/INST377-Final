@@ -3,6 +3,7 @@ const cors = require('cors');
 const multer = require('multer');
 const formidable = require('formidable');
 const path = require("path");
+const app = express();
 
 var http = require('http');
 var fs = require('fs');
@@ -42,7 +43,7 @@ const upload = multer({
 }).single("imageToUpload");
 
 // var server = http.createServer(function (req, res) {
-express.get('/', (req, res) => {
+app.get('/', (req, res) => {
   console.log('request was made: ' + req.url);
   res.writeHead(200, {'Content-Type': 'text/html'});
   var myReadStream = fs.createReadStream(__dirname + '/final_home.html', 'utf8');
@@ -75,5 +76,5 @@ express.get('/', (req, res) => {
   }
 });
 
-server.listen(8080, '127.0.0.1');
+app.listen(8080, '127.0.0.1');
 console.log('Now listening to port 8080');
